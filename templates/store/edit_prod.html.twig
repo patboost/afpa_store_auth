@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Mini Shop : 
+    {% if mode %}
+        Editer un produit
+    {% else %}
+        Creer un produit
+    {% endif %}
+{% endblock %}
+
+
+{% block body %}
+    <h2 class="text-center">Edition d'un produit</h2>
+
+    {{ form_start(form) }}
+    {{ form_row(form.name, {'label': "Nom du produit"}) }}
+    {{ form_row(form.category, {'label': "Catégorie"}) }}
+    {{ form_row(form.quantity, {'label': "Quantité"}) }}
+    {{ form_row(form.price, {'label': "Prix unitaire"}) }}
+    <div class="text-center">
+        <button type="submit" class='btn btn-success'>
+            {% if mode %}
+                Enregistrer les modifications
+            {% else %}
+                Ajouter ce produit
+            {% endif %}
+        </button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

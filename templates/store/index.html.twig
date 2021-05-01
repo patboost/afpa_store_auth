@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mini Shop: Liste des produits{% endblock %}
+
+{% block body %}
+    {# Afficher les messages d'erreur #}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger flash-error">{{ message }}</div>
+    {% endfor %}
+
+    <h1 class="text-center">Voici notre sélection HighTech</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-info">
+                <th class="text-center">Nom produit</th>
+                <th class="text-center">Catégorie</th>
+                <th class="text-center">Prix unitaire</th>
+                <th class="text-center">Quantité en stock</th>
+                <th colspan="2" class="text-center">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('new_prod') }}" class="btn btn-success fa fa-plus-square"></a>
+                {% endif %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prod in prods %}
+                <tr class="
+                    {% if loop.index is divisible by(2) %}
+                        table-light
+                    {% else %}
+                        table-dark
+                    {% endif %}">
+                    <td class="text-center">{{ prod.name }}</td>
+                    <td class="text-center">{{ prod.category.name }}</td>
+                    <td class="text-center">{{ prod.price | number_format(2, ',', '.') }} €</td>
+                    <td class="text-center">{{ prod.quantity }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('edit_prod', {'id': prod.id}) }}" class="fa fa-edit"></a></td>
+                        <td><a href="{{ path('delete_prod', {'id': prod.id}) }}" class="fa fa-trash"></a></td>
+                    {% else %}
+                        <td><a href="{{ path('add_cart', {'id': prod.id}) }}" class="fa fa-cart-arrow-down"></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

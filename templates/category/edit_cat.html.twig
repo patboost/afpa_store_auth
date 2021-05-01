@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Mini Shop : 
+    {% if mode %}
+        Editer une catégorie
+    {% else %}
+        Creer une catégorie
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.name, {'label': 'Nom', 'attr':{'placeholder': "Entrez le nom de la nouvelle catégorie"}}) }}
+    <div class="text-center">
+        <button type="submit" class='btn btn-success'>
+            {% if mode %}
+                Enregistrer les modifications
+            {% else %}
+                Ajouter cette catégorie
+            {% endif %}
+        </button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
